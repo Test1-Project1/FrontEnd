@@ -1,0 +1,377 @@
+<section
+  class="d-flex justify-content-center align-items-center"
+  id="container"
+>
+  <div class="pb-3 pt-3" style="align-content: center; margin: 0 auto">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div
+        class="col col-xl-10 d-flex align-items-center justify-content-center"
+      >
+        <div
+          class="card sign-up-row d-flex align-items-center justify-content-center w-90"
+          style="border-radius: 1rem"
+        >
+          <div class="row g-3">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form
+                  class=""
+                  [formGroup]="userCreationForm"
+                  (ngSubmit)="createuser()"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-center mb-3"
+                    style="margin-top: -40px"
+                  ></div>
+
+                  <!-- EMAIL INPUT -->
+                  <div class="form-group mb-3">
+                    <label class="form-label pt-3" for="form2Example17"
+                      >E-mail
+                    </label>
+                    <input
+                      (keyup)="enableBTmSubmit()"
+                      type="email"
+                      id="email"
+                      class="form-control form-control-lg pt-3"
+                      formControlName="email"
+                      required
+                      [class.is-invalid]="
+                        userCreationForm.get('email')?.invalid &&
+                        userCreationForm.get('email')?.touched
+                      "
+                    />
+                    <!-- EMAIL VALIDATION -->
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('email')?.invalid &&
+                          userCreationForm.get('email')?.touched) ||
+                        userCreationForm.get('email')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="userCreationForm.get('email')?.errors?.required"
+                        >Email address is required</small
+                      >
+                      <small
+                        class="text-danger"
+                        *ngIf="userCreationForm.get('email')?.errors?.email"
+                        >Email address is invalid</small
+                      >
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <input
+                      (keyup)="enableBTmSubmit()"
+                      type="text"
+                      id="username"
+                      class="form-control form-control-lg"
+                      formControlName="username"
+                      required
+                      [class.is-invalid]="
+                        userCreationForm.get('username')?.invalid &&
+                        userCreationForm.get('username')?.touched
+                      "
+                    />
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('username')?.invalid &&
+                          userCreationForm.get('username')?.touched) ||
+                        userCreationForm.get('username')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.get('username')?.errors?.required
+                        "
+                      >
+                        Username is required
+                      </small>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.get('username')?.errors?.username
+                        "
+                      >
+                        Username is invalid
+                      </small>
+                    </div>
+                  </div>
+
+                  <!-- PASSWORD INPUT -->
+                  <div class="form-group mb-2">
+                    <label class="form-label" for="form2Example27"
+                      >Password</label
+                    >
+
+                    <div class="input-group mb-2">
+                      <input
+                        autocomplete="on"
+                        ng-model="vc.password"
+                        (keyup)="enableBTmSubmit()"
+                        [type]="showPassword ? 'text' : 'password'"
+                        class="form-control form-control-lg"
+                        aria-label="Amount (to the nearest dollar)"
+                        class="form-control form-control-lg"
+                        formControlName="password"
+                        required
+                        [class.is-invalid]="
+                          userCreationForm.get('password')?.invalid &&
+                          userCreationForm.get('password')?.touched
+                        "
+                        style="border-right: none"
+                      />
+                      <span
+                        class="input-group-text"
+                        style="background-color: white"
+                        (click)="showHidePassword()"
+                      >
+                        <i
+                          [ngClass]="
+                            showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'
+                          "
+                          id="togglePassword"
+                        ></i
+                      ></span>
+                    </div>
+                    <!-- PASSWORD VALIDATION -->
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('password')?.invalid &&
+                          userCreationForm.get('password')?.touched) ||
+                        userCreationForm.get('password')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.get('password')?.errors?.required
+                        "
+                        >password is required</small
+                      >
+                    </div>
+                    <!-- PASSWOR MUST BE at least 5 Caractere -->
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('password')?.invalid &&
+                          userCreationForm.get('password')?.touched) ||
+                        userCreationForm.get('password')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.controls['password'].hasError(
+                            'required'
+                          ) ||
+                          userCreationForm.controls['password'].hasError(
+                            'minlength'
+                          )
+                        "
+                      >
+                        Must be at least 5 characters!</small
+                      >
+                    </div>
+
+                    <!--Password conatan 1 number -->
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('password')?.invalid &&
+                          userCreationForm.get('password')?.touched) ||
+                        userCreationForm.get('password')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.controls['password'].hasError(
+                            'required'
+                          ) ||
+                          userCreationForm.controls['password'].hasError(
+                            'hasNumber'
+                          )
+                        "
+                      >
+                        Must contain at least 1 number!</small
+                      >
+                    </div>
+
+                    <!--Password conatan 1 in Capital Case -->
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('password')?.invalid &&
+                          userCreationForm.get('password')?.touched) ||
+                        userCreationForm.get('password')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.controls['password'].hasError(
+                            'required'
+                          ) ||
+                          userCreationForm.controls['password'].hasError(
+                            'hasCapitalCase'
+                          )
+                        "
+                      >
+                        Must contain at least 1 in Capital Case!</small
+                      >
+                    </div>
+
+                    <!--Password conatan 1 in Small Case -->
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('password')?.invalid &&
+                          userCreationForm.get('password')?.touched) ||
+                        userCreationForm.get('password')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.controls['password'].hasError(
+                            'required'
+                          ) ||
+                          userCreationForm.controls['password'].hasError(
+                            'hasSpecialCharacters'
+                          )
+                        "
+                      >
+                        Must contain at least 1 Special Character!</small
+                      >
+                    </div>
+
+                    <p class="fs-6 text-muted fw-lighter">
+                      Your password should contain at least 5 characters and no
+                      spaces.
+                    </p>
+                  </div>
+
+                  <!-- CONFIRM PASSWORD INPUT -->
+                  <div class="form-group mb-3">
+                    <label class="form-label" for="form2Example27"
+                      >Confirm password</label
+                    >
+                    <div class="input-group mb-2">
+                      <input
+                        (keyup)="enableBTmSubmit()"
+                        [type]="showPasswordConfirm ? 'text' : 'password'"
+                        id="form2Example27"
+                        class="form-control form-control-lg"
+                        required
+                        formControlName="confirm_password"
+                        [class.is-invalid]="
+                          userCreationForm.get('confirm_password')?.invalid &&
+                          userCreationForm.get('confirm_password')?.touched
+                        "
+                        style="border-right: none"
+                      />
+                      <span
+                        class="input-group-text"
+                        style="background-color: white"
+                        (click)="showHidePasswordConfirm()"
+                      >
+                        <i
+                          [ngClass]="
+                            showPasswordConfirm
+                              ? 'bi bi-eye'
+                              : 'bi bi-eye-slash'
+                          "
+                          id="togglePassword"
+                        ></i
+                      ></span>
+                    </div>
+                    <div
+                      *ngIf="
+                        (userCreationForm.get('confirm_password')?.invalid &&
+                          userCreationForm.get('confirm_password')?.touched) ||
+                        userCreationForm.get('confirm_password')?.dirty
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.get('confirm_password')?.errors
+                            ?.required
+                        "
+                        >password is required</small
+                      >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userCreationForm.get('confirm_password')?.errors
+                            ?.confirmedValidator
+                        "
+                        >Password and Confirm Password must be match.</small
+                      >
+                    </div>
+                  </div>
+
+                  <!-- CREATE user BUTTON -->
+                  <div class="pt-1 mb-4">
+                    <button
+                      class="btn btn-success btn-lg btn-block w-100 creer-ide-btn"
+                      type="submit"
+                      style="background-color: #2c5372"
+                      [disabled]="is_valid_form"
+                    >
+                      Create your user
+                    </button>
+                  </div>
+
+                  <!-- LINKS FOR CONDITIONS -->
+                  <p
+                    class="pb-lg-2"
+                    style="color: #393f81; font-size: 15px"
+                    [routerLink]="['/terms']"
+                  >
+                    By following, you accept our conditions
+                    <a href="#!" style="color: #ffe500; font-weight: bold"
+                      >General Conditions</a
+                    >
+                  </p>
+                  <p
+                    class="mb-5 pb-lg-2"
+                    style="color: #393f81; font-size: 15px"
+                  >
+                    You already have an user ?
+                    <a
+                      style="color: #ffe500; font-weight: bold"
+                      [routerLink]="['/lookup']"
+                      >Login</a
+                    >
+                  </p>
+                  <div class="d-flex justify-content-end">
+                    <a
+                      href=""
+                      style="color: #ffe500; font-weight: bold"
+                      class="small mx-4"
+                      >Help</a
+                    >
+                    <a
+                      href=""
+                      style="color: #ffe500; font-weight: bold"
+                      class="small mx-4"
+                      >Confidentiality</a
+                    >
+                    <a
+                      href=""
+                      style="color: #ffe500; font-weight: bold"
+                      class="small mx-4"
+                      >Conditions</a
+                    >
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
